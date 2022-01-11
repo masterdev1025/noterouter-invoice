@@ -1,9 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-
+const cors = require('cors');
 // create express app
 var app = express();
 
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
