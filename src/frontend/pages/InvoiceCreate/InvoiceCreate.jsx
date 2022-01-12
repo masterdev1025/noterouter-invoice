@@ -23,11 +23,13 @@ const InvoiceCreate = () => {
         "country2": "",
         "items": []
     })
+    const [required, setRequired] = useState([]);
     const onChangeFun = (e) => {
         setInvoice({
             ...invoice,
             [e.target.name]: e.target.value
         })
+        setRequired( required.filter(item => item !== e.target.name) )
     }
     const onChangeItem = (e, index) => {
        var _invoice = {...invoice};
@@ -56,69 +58,80 @@ const InvoiceCreate = () => {
         _invoice.items = _invoice.items.filter((item, _index) => index !== _index)
         setInvoice(_invoice)
     }
+    const isUnValidate = (name) => {
+        return required.includes(name);
+    }
+    const saveAndSend = () => {
+        var required = [];
+        for(let input in invoice){
+            if(input == "items") continue;
+            if( !invoice[input] ) required.push( input )
+        }
+        setRequired(required)
+    }
     return (
         <>
             <Box><Label color="white" size="large">New Invoice</Label></Box>
             <Box><Label color="#7c5cfb" size="medium">Bill From</Label></Box>
             <Box>
                 <Box><Label color="#dde2f6" size="normal">Street Address</Label></Box>
-                <Input value={invoice.street1} name="street1" onChange={onChangeFun} />
+                <Input value={invoice.street1} name="street1" onChange={onChangeFun} error = {isUnValidate("street1")}/>
             </Box>
             <Row>
                 <Col per="30">
                     <Box><Label color="#dde2f6" size="normal">City</Label></Box>
-                    <Input value={invoice.city1} name="city1" onChange={onChangeFun} />
+                    <Input value={invoice.city1} name="city1" onChange={onChangeFun} error = {isUnValidate("city1")}/>
                 </Col>
                 <Col per="30">
                     <Box><Label color="#dde2f6" size="normal">Post Code</Label></Box>
-                    <Input value={invoice.postCode1} name="postCode1" onChange={onChangeFun} />
+                    <Input value={invoice.postCode1} name="postCode1" onChange={onChangeFun} error = {isUnValidate("postCode1")}/>
                 </Col>
                 <Col per="30">
                     <Box><Label color="#dde2f6" size="normal">Country</Label></Box>
-                    <Input value={invoice.country1} name="country1" onChange={onChangeFun} />
+                    <Input value={invoice.country1} name="country1" onChange={onChangeFun} error = {isUnValidate("country1")}/>
                 </Col>
             </Row>
             <Box><Label color="#7c5cfb" size="medium">Bill To</Label></Box>
             <Box>
                 <Box><Label color="#dde2f6" size="normal">Client's Name</Label></Box>
-                <Input value={invoice.clientName} name="clientName" onChange={onChangeFun} />
+                <Input value={invoice.clientName} name="clientName" onChange={onChangeFun} error = {isUnValidate("clientName")}/>
             </Box>
             <Box>
                 <Box><Label color="#dde2f6" size="normal">Client's Email</Label></Box>
-                <Input value={invoice.clientEmail} name="clientEmail" onChange={onChangeFun} />
+                <Input type = "email" value={invoice.clientEmail} name="clientEmail" onChange={onChangeFun} error = {isUnValidate("clientEmail")}/>
             </Box>
             <Box>
                 <Box><Label color="#dde2f6" size="normal">Street Address</Label></Box>
-                <Input value={invoice.street2} name="street2" onChange={onChangeFun} />
+                <Input value={invoice.street2} name="street2" onChange={onChangeFun} error = {isUnValidate("street2")}/>
             </Box>
             <Row>
                 <Col per="30">
                     <Box><Label color="#dde2f6" size="normal">City</Label></Box>
-                    <Input value={invoice.city2} name="city2" onChange={onChangeFun} />
+                    <Input value={invoice.city2} name="city2" onChange={onChangeFun} error = {isUnValidate("city2")}/>
                 </Col>
                 <Col per="30">
                     <Box><Label color="#dde2f6" size="normal">Post Code</Label></Box>
-                    <Input value={invoice.postCode2} name="postCode2" onChange={onChangeFun} />
+                    <Input value={invoice.postCode2} name="postCode2" onChange={onChangeFun} error = {isUnValidate("postCode2")}/>
                 </Col>
                 <Col per="30">
                     <Box><Label color="#dde2f6" size="normal">Country</Label></Box>
-                    <Input value={invoice.country2} name="country2" onChange={onChangeFun} />
+                    <Input value={invoice.country2} name="country2" onChange={onChangeFun} error = {isUnValidate("country2")}/>
                 </Col>
             </Row>
             <br />
             <Row>
                 <Col per="45">
                     <Box><Label color="#dde2f6">Invoice Date</Label></Box>
-                    <Input value={invoice.paymentdue} name="paymentdue" onChange={onChangeFun} />
+                    <Input type = "date" value={invoice.paymentdue} name="paymentDue" onChange={onChangeFun} error = {isUnValidate("paymentDue")}/>
                 </Col>
                 <Col per="45">
                     <Box><Label color="#dde2f6">Payment Terms</Label></Box>
-                    <Input value={invoice.paymentTerms} name="paymentTerms" onChange={onChangeFun} />
+                    <Input type = "number" value={invoice.paymentTerms} name="paymentTerms" onChange={onChangeFun} error = {isUnValidate("paymentTerms")}/>
                 </Col>
             </Row>
             <Box>
                 <Box><Label color="#dde2f6">Project Description</Label></Box>
-                <Input value={invoice.description} name="description" onChange={onChangeFun} />
+                <Input value={invoice.description} name="description" onChange={onChangeFun} error = {isUnValidate("description")}/>
             </Box>
             <br />
             <Box><Label color="#777e98" size="medium">Item List</Label></Box>
@@ -171,7 +184,7 @@ const InvoiceCreate = () => {
                     <Button variant = "dark">Save as Draft</Button>
                 </Col>
                 <Col per = "20">
-                    <Button variant = "primary">Save & Send</Button>
+                    <Button variant = "primary" onClick = {saveAndSend}>Save & Send</Button>
                 </Col>
             </Row>
 

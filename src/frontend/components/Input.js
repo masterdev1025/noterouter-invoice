@@ -7,5 +7,6 @@ export const Input = styled.input`
     color: white;
     background-color: #1f213a;
     width: 100%;
-    outline: none;           
+    outline: none;    
+    ${ props => props.error == true && 'border: 1px solid red;' }       
 `
