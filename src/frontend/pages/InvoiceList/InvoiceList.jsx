@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import {
     InvoiceTopBar,
@@ -10,6 +11,7 @@ import {
 import InvoiceItem from './components/InvoiceItem'
 const InvoiceList = () => {
     const [invoices, setInvoices] = useState(null);
+    const navigate = useNavigate()
     const fetchData = async () => {
         const api = await fetch('http://localhost:3001/invoices');
         const apiRes = await api.json();
@@ -46,7 +48,7 @@ const InvoiceList = () => {
                     <InvoiceListTitle>Invoices</InvoiceListTitle>
                     <InvoiceListCounter>There are {invoices ? invoices.length : 0} total invoices</InvoiceListCounter>
                 </InvoiceListTitleWrapper>
-                <InvoiceCreateButton>New Invoice</InvoiceCreateButton>
+                <InvoiceCreateButton onClick = {() => navigate('/invoices/create')}>New Invoice</InvoiceCreateButton>
             </InvoiceTopBar>
             {
                 invoices && invoices.map((invoice) => (
