@@ -6,4 +6,5 @@ module.exports = function(app) {
     app.get('/invoices', invoice.findAll);
     // Delete a Invoice with invoiceId
     app.delete('/invoices/:invoiceId', invoice.delete);
+    app.post('/invoices/create', invoice.create);
 }
