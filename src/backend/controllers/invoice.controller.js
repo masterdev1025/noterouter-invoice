@@ -49,3 +49,14 @@ exports.delete = function (req, res) {
         }
     });
 };
+
+exports.findOne = function(req, res) {
+    // Find a single invoice with a invoiceId
+    Invoice.findById(req.params.invoiceId, function(err, data) {
+        if(err) {
+            res.status(500).send({message: "Could not retrieve invoice with id " + req.params.invoiceId});
+        } else {
+            res.send(data);
+        }
+    });
+};
