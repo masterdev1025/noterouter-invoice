@@ -4,5 +4,6 @@ module.exports = function(app) {
 
     // Retrieve all Invoices
     app.get('/invoices', invoice.findAll);
-
+    // Delete a Invoice with invoiceId
+    app.delete('/invoices/:invoiceId', invoice.delete);
 }
