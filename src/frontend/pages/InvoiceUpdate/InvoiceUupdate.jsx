@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
     Label
 } from '../../components/Lable'
@@ -18,6 +18,7 @@ import {
 const InvoiceUpdate = () => {
     const [invoice, setInvoice] = useState(null)
     const params = useParams();
+    const navigate = useNavigate();
     const getInvoiceData = async () => {
         const api = await fetch(`http://localhost:3001/invoices/${params.id}`);
         const apiRes = await api.json();
@@ -28,6 +29,36 @@ const InvoiceUpdate = () => {
     useEffect(() => {
         getInvoiceData();
     }, [])
+    const completeReq = () => {
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                data: {
+                    status: 'paid'
+                }
+            })
+        };
+        fetch(`http://localhost:3001/invoices/${invoice._id}`, requestOptions).then((res) => {
+            if (res && res.status == 200) {
+                navigate('/')
+            }
+        })
+    }
+
+    const markAsComplete = () => {
+        swal({
+            title: "Are you sure?",
+            text: "you want to mark this invoice as complete?",
+            icon: "info",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                return completeReq()
+            }
+        });
+    }
     return (
         <>
             <InvoiceHeader>
@@ -37,7 +68,7 @@ const InvoiceUpdate = () => {
                 </InvoiceHeaderStatus>
                 <Button variant="secondary">Edit</Button>
                 <Button variant="error">Delete</Button>
-                <Button variant="primary">Mark as Paid</Button>
+                <Button variant="primary" onClick={markAsComplete}>Mark as Paid</Button>
             </InvoiceHeader>
             <InvoiceContent>
                 <Box><Label color="white" size="large">{invoice?.id}</Label></Box>
