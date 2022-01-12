@@ -1,9 +1,8 @@
 import React from 'react';
 import {
-   BrowserRouter as Router,
-   Route,
-   Routes,
-   Navigate
+    Route,
+    Routes,
+    Navigate
 } from 'react-router-dom';
 import { Container } from "../components/Container";
 import { HomeContent } from './Home.styled'
@@ -14,14 +13,12 @@ const Home = () => {
     return (
         <Container>
             <HomeContent>
-                <Router>
-                    <Routes>
-                        <Route path="/invoices" element = {<InvoiceList/>} />
-                        <Route path="/invoices/create" element = {<InvoiceCreate/>} />
-                        <Route path="/invoices/:id/edit" element = {<InvoiceEdit/>} />
-                        <Route path="/" element={<Navigate replace to="/invoices" />} />
-                    </Routes>
-                </Router>
+                <Routes>
+                    <Route path="/invoices" element={<InvoiceList />} />
+                    <Route path="/invoices/create" element={<InvoiceCreate />} />
+                    <Route path="/invoices/:id/edit" element={<InvoiceEdit />} />
+                    <Route path="/" element={<Navigate replace to="/invoices" />} />
+                </Routes>
             </HomeContent>
         </Container>
     )

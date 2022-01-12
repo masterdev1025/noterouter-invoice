@@ -11,4 +11,5 @@ export const HeaderLogo = styled.div`
     color: #ffffff;
     font-size: 24px;
     font-weight: bold;
+    cursor: pointer;
 `
