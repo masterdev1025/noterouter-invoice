@@ -60,3 +60,24 @@ exports.findOne = function(req, res) {
         }
     });
 };
+
+exports.update = function(req, res) {
+    // Update a invoice identified by the invoiceId in the request
+    Invoice.findById(req.params.invoiceId, function(err, invoice) {
+        if(err) {
+            res.status(500).send({message: "Could not find a invoice with id " + req.params.invoiceId});
+        }
+
+        for(let d in req.body.data){
+            invoice[d] = req.body.data[d];
+        }
+
+        invoice.save(function(err, data){
+            if(err) {
+                res.status(500).send({message: "Could not update invoice with id " + req.params.invoiceId});
+            } else {
+                res.send(data);
+            }
+        });
+    });
+};

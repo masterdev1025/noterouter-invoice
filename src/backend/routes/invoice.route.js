@@ -10,4 +10,6 @@ module.exports = function(app) {
     app.post('/invoices/create', invoice.create);
      // Retrieve a single Invoice with invoiceId
      app.get('/invoices/:invoiceId', invoice.findOne);
+     // Update a Invoice with invoiceId
+    app.put('/invoices/:invoiceId', invoice.update);
 }
