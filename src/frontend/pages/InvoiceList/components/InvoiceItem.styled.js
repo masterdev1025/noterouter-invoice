@@ -42,8 +42,8 @@ export const InvoiceStatusBox = styled.div`
 `
 export const ActionCell = styled.div`
     display: flex;
-
     align-items: center;
+    justify-content: flex-end;
 `
 export const ActionButton = styled.span`
     user-select: none;
@@ -57,4 +57,8 @@ export const ActionButton = styled.span`
     &:hover {
         text-decoration: underline;
       }
+`
+
+export const EmptyFlexDiv = styled.div`
+    flex:1;
 `

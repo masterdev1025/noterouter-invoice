@@ -1,12 +1,16 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
     InvoiceItemWrapper, 
     InvoiceItemCell, 
     InvoiceLabel, 
     InvoiceStatusBox ,
     ActionCell,
-    ActionButton
+    ActionButton,
+    EmptyFlexDiv
 } from './InvoiceItem.styled'
 const InvoiceItem = (props) => {
+    const navigate = useNavigate();
     const invoice = props.invoice;
     return (
         <InvoiceItemWrapper>
@@ -32,7 +36,10 @@ const InvoiceItem = (props) => {
             </InvoiceItemCell>
             <InvoiceItemCell per="15">
                <ActionCell>
-                   <ActionButton color = "white">Edit</ActionButton>
+                   {
+                       invoice.status === 'pending' ? <ActionButton color = "white" onClick={()=>navigate(`/invoices/${invoice._id}/update`)}>Update</ActionButton> : <EmptyFlexDiv/>
+                   }
+                   
                    <ActionButton color = "red" onClick={() =>props.delete(invoice._id)}>Delete</ActionButton>
                </ActionCell>
             </InvoiceItemCell>
