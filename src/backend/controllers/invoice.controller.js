@@ -12,7 +12,7 @@ exports.findAll = function(req, res) {
 };
 
 exports.delete = function(req, res) {
-    // Delete a note with the specified noteId in the request
+    // Delete a invoice with the specified invoiceId in the request
     Invoice.remove({_id: req.params.invoiceId}, function(err, data) {
         if(err) {
             res.status(500).send({message: "Could not delete invoice with id " + req.params.invoiceId});
