@@ -82,7 +82,7 @@ const InvoiceCreate = () => {
                 "postCode": invoice.postCode1,
                 "country": invoice.country1
             },
-            "senderAddress": {
+            "clientAddress": {
                 "street": invoice.street2,
                 "city": invoice.city2,
                 "postCode": invoice.postCode2,
