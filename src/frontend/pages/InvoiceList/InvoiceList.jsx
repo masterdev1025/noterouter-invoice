@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import { Label } from '../../components/Lable'
 import {
     InvoiceTopBar,
     InvoiceListTitleWrapper,
@@ -11,6 +14,7 @@ import {
 import InvoiceItem from './components/InvoiceItem'
 const InvoiceList = () => {
     const [invoices, setInvoices] = useState(null);
+    const [filterStatus, setFilterStatus] = useState('all')
     const navigate = useNavigate()
     const fetchData = async () => {
         const api = await fetch('http://localhost:3001/invoices');
@@ -38,9 +42,19 @@ const InvoiceList = () => {
         });
 
     }
+    const onChangeStatus = (e) => {
+        setFilterStatus(e.value)
+    }
+    const filterFun = (item) => {
+        if (filterStatus == 'all') return true;
+        else {
+            return item.status === filterStatus
+        }
+    }
     useEffect(() => {
         fetchData();
     }, [])
+
     return (
         <>
             <InvoiceTopBar>
@@ -48,10 +62,12 @@ const InvoiceList = () => {
                     <InvoiceListTitle>Invoices</InvoiceListTitle>
                     <InvoiceListCounter>There are {invoices ? invoices.length : 0} total invoices</InvoiceListCounter>
                 </InvoiceListTitleWrapper>
-                <InvoiceCreateButton onClick = {() => navigate('/invoices/create')}>New Invoice</InvoiceCreateButton>
+                <Label color="white" size="normal">Filter By Status</Label>
+                <Dropdown onChange={onChangeStatus} placeholder="Select an option" options={['all', 'paid', 'pending', 'draft']} value={filterStatus}></Dropdown>
+                <InvoiceCreateButton onClick={() => navigate('/invoices/create')}>New Invoice</InvoiceCreateButton>
             </InvoiceTopBar>
             {
-                invoices && invoices.map((invoice) => (
+                invoices && invoices.filter(filterFun).map((invoice) => (
                     <InvoiceItem key={invoice.id} invoice={invoice} delete={deleteInvoice} />
                 ))
             }

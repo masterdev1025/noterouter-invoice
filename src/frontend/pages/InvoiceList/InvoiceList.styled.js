@@ -23,4 +23,5 @@ export const InvoiceCreateButton = styled.div`
     background-color: #7c5df9;
     color: white;
     cursor: pointer;
+    margin-left: 20px;
 `
